@@ -11,7 +11,7 @@
 # For more details: https://github.com/NixOS/nixpkgs/blob/20.03/pkgs/development/haskell-modules/make-package-set.nix#L256
 
 
-{ compiler ? "default",
+{ compiler ? "ghc8102-infotable-profiling",
   withHoogle ? false,
   nixpkgs ? import ./nix {}
  }:
