@@ -4,6 +4,7 @@ let
   overlay = selfPkgs: pkgs:
     let sharedOverrides = {
         overrides = _self: super: {
+            eventlog2html = super.callCabal2nix "eventlog2html" sources.eventlog2html {};
             mkDerivation = args: super.mkDerivation (args //
                 {
                     # skip running tests for Hackage packages
