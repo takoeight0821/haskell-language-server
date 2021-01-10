@@ -15,7 +15,7 @@ let
             };
             };
 
-        ghc8102-infotable-profiling = pkgs.callPackage "${sources.ghcs-nix}/ghc.nix" {
+        ghc8102-infotable-profiling = pkgs.callPackage "${sources.ghcs-nix}/hadrian.nix" {
             version = "8.10.2";
             src = pkgs.fetchgit {
               url = "https://gitlab.haskell.org/mpickering/ghc.git";
@@ -23,10 +23,14 @@ let
               sha256 = "0c4zg14j3p5ra0g2cj0jnqhk5br9ljf403395j867vxkvrpbc0cp";
               fetchSubmodules = true;
             };
-            bootPkgs = pkgs.haskell.packages.ghc884;
+            bootGhc = pkgs.haskell.compiler.ghc884;
             buildLlvmPackages = pkgs.llvmPackages;
-            werror = false;
             sphinx = null;
+            libffi = null;
+            extraSettings = ''
+              stage1.*.ghc.hs.opts += -finfo-table-map -fdistinct-constructor-tables
+              stage1.ghc-bin.ghc.link.opts += -eventlog
+            '';
           };
 
         gitignoreSource = (import sources.gitignore { inherit (pkgs) lib; }).gitignoreSource;
